@@ -2,14 +2,15 @@
 #include <iostream>
 #include <stack>
 
-class RNP
+class Rpn
 {
     private:
         std::string _input;
         std::stack<int> _mystack;
-        RNP();
+        Rpn();
     public:
-        RNP(std::string input);
+        Rpn(std::string input);
+        void do_operations(char input);
         void start_exec();
 
 };
