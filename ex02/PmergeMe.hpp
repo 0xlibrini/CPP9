@@ -15,6 +15,6 @@ class PmergeMe
         std::deque<int>  deq;
     public:
 
-}
+};
 #endif
 
