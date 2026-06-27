@@ -6,6 +6,7 @@ int main(int ac , char **av)
     try
     {
         PmergeMe  merge(ac , av);
+        merge.vec_sort();
     }
     catch(const char *e)
     {

@@ -28,3 +28,15 @@ void  PmergeMe::parse_input(std::string av)
     deq.push_back(atoi(input.c_str()));
     vec.push_back(atoi(input.c_str()));
 }
+
+void PmergeMe::make_pairs(std::vector<std::pair<int,int> > &pairs)
+{
+    for(size_t i = 0 ; i < vec.size() ; i+= 2) pairs.push_back(std::make_pair(vec[i], vec[i + 1]));
+}
+void PmergeMe::vec_sort()
+{
+    std::vector<std::pair<int,int> > pairs;
+    make_pairs(pairs);
+    for(size_t i = 0 ; i < pairs.size() ; i++)
+        std::cout << pairs[i].first << "  " << pairs[i].second << std::endl;
+}

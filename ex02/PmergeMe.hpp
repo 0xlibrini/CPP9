@@ -6,6 +6,7 @@
 #include <deque>
 #include <limits.h>
 #include <cstdlib>
+#include <utility>
 
 
 class PmergeMe
@@ -18,8 +19,8 @@ class PmergeMe
         PmergeMe(int count , char **av);
         ~PmergeMe();
         void parse_input(std::string  input);
-
-
+        void vec_sort();
+        void make_pairs(std::vector<std::pair<int, int> >&pairs);
 };
 #endif
 
