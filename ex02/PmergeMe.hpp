@@ -13,11 +13,12 @@ class PmergeMe
     private:
         std::vector<int> vec;
         std::deque<int>  deq;
+        PmergeMe();
     public:
         PmergeMe(int count , char **av);
+        ~PmergeMe();
         void parse_input(std::string  input);
 
-        void getvec();
 
 };
 #endif
