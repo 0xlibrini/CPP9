@@ -19,6 +19,11 @@ int check_range(std::string input)
 PmergeMe::PmergeMe(int ac ,char **av)
 {
     for(int i = 1 ; i < ac ; i++) parse_input(av[i]);
+    std::vector<int>vect = vec;
+    vect = vec_sort(vect);
+
+    for(size_t i = 0 ; i < vect.size(); i++)
+        std::cout << vect[i] << std::endl;
 }
 void  PmergeMe::parse_input(std::string av)
 {
@@ -29,23 +34,36 @@ void  PmergeMe::parse_input(std::string av)
     vec.push_back(atoi(input.c_str()));
 }
 
-void PmergeMe::make_pairs(std::vector<std::pair<int,int> > &pairs)
+void make_pairs(std::vector<int> vect , std::vector<std::pair<int,int> > &pairs)
 {
-    for(size_t i = 0 ; i < vec.size() ; i+= 2) pairs.push_back(std::make_pair(vec[i], vec[i + 1]));
+    for(size_t i = 0 ; i < vect.size() ; i += 2) pairs.push_back(std::make_pair(vect[i], vect[i + 1]));
 }
 void swap_pairs(std::vector<std::pair<int , int> > &pair)
 {
     for(size_t i = 0 ; i < pair.size() ; i++)
         if(pair[i].first > pair[i].second) std::swap(pair[i].first , pair[i].second);
 }
-void PmergeMe::vec_sort()
+
+void set_chaine(std::vector<int> &mainchain , std::vector<int> &pendchain,std::vector<std::pair<int , int> > & pairs)
+{
+    for(size_t i  = 0 ; i < pairs.size() ; i++) {pendchain.push_back(pairs[i].first) ; mainchain.push_back(pairs[i].second);}
+}
+std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
 {
     int extra  = -1;
     if(vec.size() % 2) { extra  = vec[vec.size() - 1] ; vec.erase(vec.end() - 1);}
     std::vector<std::pair<int,int> > pairs;
-    make_pairs(pairs);
+    make_pairs(vect,pairs);
     swap_pairs(pairs);
-    for(size_t i = 0 ; i < pairs.size() ; i++)
-        std::cout << pairs[i].first << "  " << pairs[i].second << std::endl;\
+    std::vector<int> mainchain;
+    std::vector<int> pendchain;
+    set_chaine(mainchain, pendchain, pairs);
+    if(extra != -1) pendchain.push_back(extra);
+    if(mainchain.size() == 1) {
+        std::cout << "is here" << std::endl;
+        mainchain.insert(mainchain.begin(),*(pendchain.begin())); 
+        return mainchain;
+    }
+    return vec_sort(mainchain);
     
 }

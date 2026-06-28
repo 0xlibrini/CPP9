@@ -19,8 +19,8 @@ class PmergeMe
         PmergeMe(int count , char **av);
         ~PmergeMe();
         void parse_input(std::string  input);
-        void vec_sort();
-        void make_pairs(std::vector<std::pair<int, int> >&pairs);
+        std::vector<int> vec_sort(std::vector<int> vect);
+        //void make_pairs(std::vector<std::pair<int, int> >&pairs);
 };
 #endif
 
