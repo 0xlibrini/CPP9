@@ -33,10 +33,19 @@ void PmergeMe::make_pairs(std::vector<std::pair<int,int> > &pairs)
 {
     for(size_t i = 0 ; i < vec.size() ; i+= 2) pairs.push_back(std::make_pair(vec[i], vec[i + 1]));
 }
+void swap_pairs(std::vector<std::pair<int , int> > &pair)
+{
+    for(size_t i = 0 ; i < pair.size() ; i++)
+        if(pair[i].first > pair[i].second) std::swap(pair[i].first , pair[i].second);
+}
 void PmergeMe::vec_sort()
 {
+    int extra  = -1;
+    if(vec.size() % 2) { extra  = vec[vec.size() - 1] ; vec.erase(vec.end() - 1);}
     std::vector<std::pair<int,int> > pairs;
     make_pairs(pairs);
+    swap_pairs(pairs);
     for(size_t i = 0 ; i < pairs.size() ; i++)
-        std::cout << pairs[i].first << "  " << pairs[i].second << std::endl;
+        std::cout << pairs[i].first << "  " << pairs[i].second << std::endl;\
+    
 }
