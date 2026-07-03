@@ -22,8 +22,8 @@ PmergeMe::PmergeMe(int ac ,char **av)
     std::vector<int>vect = vec;
     vect = vec_sort(vect);
 
-    // for(size_t i = 0 ; i < vect.size(); i++)
-    //     std::cout << vect[i] << std::endl;
+    for(size_t i = 0 ; i < vect.size(); i++)
+        std::cout << vect[i] << std::endl;
 }
 void  PmergeMe::parse_input(std::string av)
 {
@@ -59,8 +59,9 @@ std::vector<int> JP_seq(std::vector<int> pend)
         x = jacob[jacob.size() - 1] + ( 2 * jacob[jacob.size() - 2] );
         jacob.push_back(x);
     }
-    if(jacob[jacob.size() - 1] > pend.size()) jacob.pop_back();
+    if(jacob[jacob.size() - 1] > static_cast<int>(pend.size())) jacob.pop_back();
     if(jacob.size() >= 3) jacob.erase(jacob.begin(), jacob.begin() + 3);
+
     return jacob;
 }
 std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
@@ -75,11 +76,12 @@ std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
     set_chaine(mainchain, pendchain, pairs);
     if(extra != -1) pendchain.push_back(extra);
     if(mainchain.size() == 1) {
-        std::cout << "is here" << std::endl;
         mainchain.insert(mainchain.begin(),*(pendchain.begin())); 
         return mainchain;
     }
     vec_sort(mainchain);
-    JP_seq(pendchain);
-    
+    std::vector<int>jacob = JP_seq(pendchain);
+    for( size_t i = 0; i < jacob.size(); i++)
+        std::cout << jacob[i] << std::endl;
+    return mainchain;
 }
