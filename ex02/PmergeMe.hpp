@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <cstdlib>
 #include <utility>
+#include <algorithm>
 
 
 class PmergeMe

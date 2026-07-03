@@ -22,8 +22,8 @@ PmergeMe::PmergeMe(int ac ,char **av)
     std::vector<int>vect = vec;
     vect = vec_sort(vect);
 
-    for(size_t i = 0 ; i < vect.size(); i++)
-        std::cout << vect[i] << std::endl;
+    // for(size_t i = 0 ; i < vect.size(); i++)
+    //     std::cout << vect[i] << std::endl;
 }
 void  PmergeMe::parse_input(std::string av)
 {
@@ -61,11 +61,39 @@ std::vector<int> JP_seq(std::vector<int> pend)
     }
     if(jacob[jacob.size() - 1] > static_cast<int>(pend.size())) jacob.pop_back();
     if(jacob.size() >= 3) jacob.erase(jacob.begin(), jacob.begin() + 3);
-
-    return jacob;
+    
+    std::vector<int> exp_jacob;
+    for(size_t i (0) ; i < jacob.size() ; i++)
+    {
+        int x = jacob[i];
+        while( x > 1)
+        {
+            if(std::find(exp_jacob.begin(), exp_jacob.end(), x) != exp_jacob.end()) break;
+            exp_jacob.push_back(x);
+            x--;
+        }
+    }
+    if(exp_jacob.size() + 1 != pend.size())
+    {
+        size_t x  = pend.size();
+        while( x > 1)
+        {
+            if(std::find(exp_jacob.begin(), exp_jacob.end(), x) != exp_jacob.end()) break;
+            exp_jacob.push_back(x);
+            x--;
+        }
+    }
+    return exp_jacob;
 }
 std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
 {
+    if(vect.size() == 1)
+        return vect;
+    if(vect.size() == 2)
+    {
+        if(vec[0] > vect[1]) std::swap(vect[0], vect[1]);
+        return vect;
+    }
     int extra  = -1;
     if(vect.size() % 2) { extra  = vect[vect.size() - 1] ; vect.erase(vect.end() - 1);}
     std::vector<std::pair<int,int> > pairs;
@@ -75,13 +103,10 @@ std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
     std::vector<int> pendchain;
     set_chaine(mainchain, pendchain, pairs);
     if(extra != -1) pendchain.push_back(extra);
-    if(mainchain.size() == 1) {
-        mainchain.insert(mainchain.begin(),*(pendchain.begin())); 
-        return mainchain;
-    }
     vec_sort(mainchain);
     std::vector<int>jacob = JP_seq(pendchain);
     for( size_t i = 0; i < jacob.size(); i++)
         std::cout << jacob[i] << std::endl;
+    std::cout << std::endl;
     return mainchain;
 }
