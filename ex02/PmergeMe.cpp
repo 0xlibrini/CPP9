@@ -85,6 +85,20 @@ std::vector<int> JP_seq(std::vector<int> pend)
     }
     return exp_jacob;
 }
+
+int get_index(int value , std::vector<int> mainchain)
+{
+   return  std::distance(mainchain.begin(), std::find(mainchain.begin(), mainchain.end(), value));
+}
+void   rearranging_pend(std::vector<int> new_main, std::vector<int> &mainchain, std::vector<int> &pendchain, int extra)
+{
+    std::vector<int> new_pend;
+    for(size_t i = 0 ; i < new_main.size() ; i++)
+            new_pend.push_back(pendchain[get_index(new_main[i], mainchain)]);
+    mainchain = new_main;
+    pendchain = new_pend;
+    if(extra != -1) pendchain.push_back(extra);
+}
 std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
 {
     if(vect.size() == 1)
@@ -103,10 +117,10 @@ std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
     std::vector<int> pendchain;
     set_chaine(mainchain, pendchain, pairs);
     if(extra != -1) pendchain.push_back(extra);
-    vec_sort(mainchain);
+    std::vector<int> new_main = vec_sort(mainchain);
     std::vector<int>jacob = JP_seq(pendchain);
-    for( size_t i = 0; i < jacob.size(); i++)
-        std::cout << jacob[i] << std::endl;
-    std::cout << std::endl;
+
+    rearranging_pend(new_main,mainchain, pendchain, extra);
+
     return mainchain;
 }

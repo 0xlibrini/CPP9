@@ -1,62 +1,49 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
+using namespace std;
+
+int get_index(int value , std::vector<int> mainchain)
+{
+   return  std::distance(mainchain.begin(), std::find(mainchain.begin(), mainchain.end(), value));
+}
 
 int main()
 {
-    std::vector<int> pend;
 
 
-    pend.push_back(1);
-    pend.push_back(3);
-    // pend.push_back(10);
-    // pend.push_back(12);
-    // pend.push_back(5);
-    // pend.push_back(5);
-    // pend.push_back(5);
-    // pend.push_back(5);
-    // pend.push_back(5);
-    // pend.push_back(5);
-    // pend.push_back(5);
-
-
-    std::vector<int>jacob;
-    size_t x = 0;
-    jacob.push_back(0) ; jacob.push_back(1);
-    while( x < pend.size())
-    {
-        x = jacob[jacob.size() - 1] + ( 2 * jacob[jacob.size() - 2] );
-        jacob.push_back(x);
-    }
-    if(jacob[jacob.size() - 1] > static_cast<int>(pend.size())) jacob.pop_back();
-    if(jacob.size() >= 3) jacob.erase(jacob.begin(), jacob.begin() + 3);
     
-    std::vector<int> exp_jacob;
-    for(size_t i = 0 ; i < jacob.size() ; i++)
-    {
-        int x = jacob[i];
-        while( x > 1)
-        {
-            if(std::find(exp_jacob.begin(), exp_jacob.end(), x) != exp_jacob.end()) break;
-            exp_jacob.push_back(x);
-            x--;
-        }
-    }
+    std::vector<int> new_pend;
 
-  if(exp_jacob.size() + 1 != pend.size())
-    {
-        //std::cout << pend.size() << std::endl;
-        size_t x  = pend.size();
-        while( x > 1)
-        {
-            if(std::find(exp_jacob.begin(), exp_jacob.end(), x) != exp_jacob.end()) break;
-            exp_jacob.push_back(x);
-            x--;
-        }
-    }
+    vector<int> new_main;
+    new_main.push_back(2);
+    new_main.push_back(3);
+    new_main.push_back(5);
+    new_main.push_back(6);
 
-    for(size_t i (0) ; i < exp_jacob.size() ; i++)
+
+
+     vector<int> mainchain;
+    mainchain.push_back(3);
+    mainchain.push_back(2);
+    mainchain.push_back(5);
+    mainchain.push_back(6);
+
+
+    vector<int> pendchain;
+    pendchain.push_back(1);
+    pendchain.push_back(0);
+    pendchain.push_back(15);
+    pendchain.push_back(20);
+
+        for(size_t i = 0 ; i < new_main.size() ; i++)
+        {
+            new_pend.push_back(pendchain[get_index(new_main[i], mainchain)]);
+        }
+    
+
+    for(size_t i = 0 ; i < new_pend.size(); i++)
     {
-        std::cout << exp_jacob[i] << std::endl;
+        std::cout << new_pend[i] << std::endl;
     }
 }
