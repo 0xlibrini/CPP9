@@ -101,8 +101,7 @@ void   rearranging_pend(std::vector<int> new_main, std::vector<int> &mainchain, 
 }
 std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
 {
-    if(vect.size() == 1)
-        return vect;
+    if(vect.size() == 1) return vect;
     if(vect.size() == 2)
     {
         if(vec[0] > vect[1]) std::swap(vect[0], vect[1]);
@@ -119,8 +118,7 @@ std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
     if(extra != -1) pendchain.push_back(extra);
     std::vector<int> new_main = vec_sort(mainchain);
     std::vector<int>jacob = JP_seq(pendchain);
-
     rearranging_pend(new_main,mainchain, pendchain, extra);
-
+    mainchain.insert(mainchain.begin(), pendchain[0]);
     return mainchain;
 }
