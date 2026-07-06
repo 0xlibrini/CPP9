@@ -22,9 +22,18 @@ PmergeMe::PmergeMe(int ac ,char **av)
     std::vector<int>vect = vec;
     vect = vec_sort(vect);
 
-    std::deque<int> s_deq = deq;
+   std::deque<int> s_deq = deq_sort(deq);
+
+
+    std::cout << "form vector" << std::endl;
 
     for(size_t i = 0 ; i < vect.size(); i++)
+        std::cout << vect[i] << " " ;
+    std::cout << std::endl;
+
+    std::cout << "form deque" << std::endl;
+
+    for(size_t i = 0 ; i < s_deq.size(); i++)
         std::cout << vect[i] << " " ;
     std::cout << std::endl;
 }
@@ -132,7 +141,7 @@ void insert_pendchain(std::vector<int> &mainchain, std::vector<int> &pendchain,s
 std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
 {
     if(vect.size() == 1) return vect;
-    if(vect.size() == 2){ if(vec[0] > vect[1]) std::swap(vect[0], vect[1]); return vect;}
+    if(vect.size() == 2){ if(vect[0] > vect[1]) std::swap(vect[0], vect[1]); return vect;}
     int extra  = -1;
     if(vect.size() % 2) { extra  = vect[vect.size() - 1] ; vect.erase(vect.end() - 1);}
     std::vector<std::pair<int,int> > pairs;

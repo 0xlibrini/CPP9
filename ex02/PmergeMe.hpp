@@ -21,6 +21,8 @@ class PmergeMe
         ~PmergeMe();
         void parse_input(std::string  input);
         std::vector<int> vec_sort(std::vector<int> vect);
+        std::deque<int> deq_sort(std::deque<int> deq);
+
         //void make_pairs(std::vector<std::pair<int, int> >&pairs);
 };
 #endif
