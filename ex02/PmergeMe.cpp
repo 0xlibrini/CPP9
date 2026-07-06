@@ -22,6 +22,8 @@ PmergeMe::PmergeMe(int ac ,char **av)
     std::vector<int>vect = vec;
     vect = vec_sort(vect);
 
+    std::deque<int> s_deq = deq;
+
     for(size_t i = 0 ; i < vect.size(); i++)
         std::cout << vect[i] << " " ;
     std::cout << std::endl;
@@ -102,25 +104,35 @@ void   rearranging_pend(std::vector<int> new_main, std::vector<int> &mainchain, 
 }
 
 
-void insert_pendchain(std::vector<int> &mainchain, std::vector<int> &pendchain,std::vector<int> jacob)
+int find_pair(std::vector<std::pair<int,int> > pairs, int target)
+{
+    for(size_t i(0) ; i < pairs.size() ; i++)
+        if(pairs[i].first == target) return pairs[i].second;
+    return -1;
+}
+void insert_pendchain(std::vector<int> &mainchain, std::vector<int> &pendchain,std::vector<int> jacob, int extra,std::vector<std::pair<int,int> > pairs)
 {
     mainchain.insert(mainchain.begin(), pendchain[0]);
     pendchain.erase(pendchain.begin());
+    std::vector<int>::iterator it;
     for(size_t i = 0; i < jacob.size(); i++)
     {
-        int value = pendchain[jacob[i] - 2];
-        std::vector<int>::iterator it = std::lower_bound(mainchain.begin() , mainchain.end(), value);
+        int index = jacob[i] - 2;
+        int value = pendchain[index];
+        if(value == extra) it = std::lower_bound(mainchain.begin() , mainchain.end(), value);
+        else
+        {
+            int second = find_pair(pairs, value);
+            int range = get_index(second , mainchain);
+            it = std::lower_bound(mainchain.begin() , mainchain.begin() + range , value);
+        }
         mainchain.insert(it, value);
     }
 }
 std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
 {
     if(vect.size() == 1) return vect;
-    if(vect.size() == 2)
-    {
-        if(vec[0] > vect[1]) std::swap(vect[0], vect[1]);
-        return vect;
-    }
+    if(vect.size() == 2){ if(vec[0] > vect[1]) std::swap(vect[0], vect[1]); return vect;}
     int extra  = -1;
     if(vect.size() % 2) { extra  = vect[vect.size() - 1] ; vect.erase(vect.end() - 1);}
     std::vector<std::pair<int,int> > pairs;
@@ -133,6 +145,6 @@ std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
     std::vector<int> new_main = vec_sort(mainchain);
     std::vector<int>jacob = JP_seq(pendchain);
     rearranging_pend(new_main,mainchain, pendchain, extra);
-    insert_pendchain(mainchain, pendchain,jacob);
+    insert_pendchain(mainchain, pendchain,jacob,extra,pairs);
     return mainchain;
 }
