@@ -19,23 +19,32 @@ int check_range(std::string input)
 PmergeMe::PmergeMe(int ac ,char **av)
 {
     for(int i = 1 ; i < ac ; i++) parse_input(av[i]);
-    std::vector<int>vect = vec;
-    vect = vec_sort(vect);
 
-   std::deque<int> s_deq = deq_sort(deq);
+    clock_t start1 = std::clock();
+    vec_sort(vec);
+    clock_t end1 = std::clock();
 
+    // clock_t start2 = clock();
+    // std::deque<int> s_deq = deq_sort(deq);
+    // clock_t end2 = clock();
 
-    std::cout << "form vector" << std::endl;
+    // std::cout << "Before: ";
 
-    for(size_t i = 0 ; i < vect.size(); i++)
-        std::cout << vect[i] << " " ;
-    std::cout << std::endl;
+    // for(size_t i = 0 ; i < vec.size(); i++)
+    //     std::cout << vec[i] << " " ;
+    // std::cout << std::endl;
 
-    std::cout << "form deque" << std::endl;
+    // std::cout << "After: ";
 
-    for(size_t i = 0 ; i < s_deq.size(); i++)
-        std::cout << vect[i] << " " ;
-    std::cout << std::endl;
+    // for(size_t i = 0 ; i < vec.size(); i++)
+    //     std::cout << vect[i] << " " ;
+    // std::cout << std::endl;
+
+    double time_vec =  (double)(end1 - start1) / CLOCKS_PER_SEC * 1000000.00;
+   // double time_deq =  (double)(end2 - start2) / CLOCKS_PER_SEC * 1000000;
+   // std::cout << std::fixed << std::setprecision(5);
+    std::cout << "Time to process a range of 5 elements with std::[vector] " << time_vec << std::endl;
+    //std::cout << "Time to process a range of 5 elements with std::[deque ] " << time_deq << std::endl;
 }
 void  PmergeMe::parse_input(std::string av)
 {
@@ -138,8 +147,9 @@ void insert_pendchain(std::vector<int> &mainchain, std::vector<int> &pendchain,s
         mainchain.insert(it, value);
     }
 }
-std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
+std::vector<int> PmergeMe::vec_sort(std::vector<int>& vect)
 {
+
     if(vect.size() == 1) return vect;
     if(vect.size() == 2){ if(vect[0] > vect[1]) std::swap(vect[0], vect[1]); return vect;}
     int extra  = -1;
