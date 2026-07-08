@@ -41,7 +41,7 @@ PmergeMe::PmergeMe(int ac ,char **av)
         std::cout << vect[i] << " " ;
     std::cout << std::endl;
 
-    double time_vec =  (double)(end1 - start1 ) / CLOCKS_PER_SEC * 1000000.00;
+    double time_vec =  (double)(end1 - start1 ) / CLOCKS_PER_SEC * 1000000;
     double time_deq =  (double)(end2 - start2) / CLOCKS_PER_SEC * 1000000;
     std::cout << "Time to process a range of " << vect.size() << " elements with std::vector: " << time_vec << "us" << std::endl;
     std::cout << "Time to process a range of " << deq.size() <<  " elements with std::deque : " << time_deq << "us"<< std::endl;
