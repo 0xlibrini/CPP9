@@ -8,10 +8,11 @@ bool   check_alpha(std::string sub)
     return 1;
 }
 
-int check_range(std::string input)
+int PmergeMe::check_range(std::string input)
 {
     double value = strtod(input.c_str(),NULL);
     if(value > INT_MAX || value < 0) return 0;
+    if(std::find(vec.begin(), vec.end(), value) != vec.end()) return 0;
     return 1;
 }
 
@@ -20,37 +21,36 @@ PmergeMe::PmergeMe(int ac ,char **av)
 {
     for(int i = 1 ; i < ac ; i++) parse_input(av[i]);
 
-    // clock_t start1 = std::clock();
-    vec_sort(vec);
-    // clock_t end1 = std::clock();
+    clock_t start1 = std::clock();
+    std::vector<int> vect = vec_sort(vec);
+    clock_t end1 = std::clock();
 
-    // clock_t start2 = clock();
-    // std::deque<int> s_deq = deq_sort(deq);
-    // clock_t end2 = clock();
+    clock_t start2 = clock();
+    std::deque<int> s_deq = deq_sort(deq);
+    clock_t end2 = clock();
 
-    // std::cout << "Before: ";
+    std::cout << "Before: ";
 
-    // for(size_t i = 0 ; i < vec.size(); i++)
-    //     std::cout << vec[i] << " " ;
-    // std::cout << std::endl;
+    for(size_t i = 0 ; i < vec.size(); i++)
+        std::cout << vec[i] << " " ;
+    std::cout << std::endl;
 
-    // std::cout << "After: ";
+    std::cout << "After: ";
 
-    // for(size_t i = 0 ; i < vec.size(); i++)
-    //     std::cout << vect[i] << " " ;
-    // std::cout << std::endl;
+    for(size_t i = 0 ; i < vect.size(); i++)
+        std::cout << vect[i] << " " ;
+    std::cout << std::endl;
 
-    double time_vec =  (_time / CLOCKS_PER_SEC) * 1000000.00;
-   // double time_deq =  (double)(end2 - start2) / CLOCKS_PER_SEC * 1000000;
-     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "Time to process a range of 5 elements with std::[vector] " << time_vec << std::endl;
-    //std::cout << "Time to process a range of 5 elements with std::[deque ] " << time_deq << std::endl;
+    double time_vec =  (double)(end1 - start1 ) / CLOCKS_PER_SEC * 1000000.00;
+    double time_deq =  (double)(end2 - start2) / CLOCKS_PER_SEC * 1000000;
+    std::cout << "Time to process a range of " << vect.size() << " elements with std::vector: " << time_vec << "us" << std::endl;
+    std::cout << "Time to process a range of " << deq.size() <<  " elements with std::deque : " << time_deq << "us"<< std::endl;
 }
-void  PmergeMe::parse_input(std::string av)
+void  PmergeMe::    parse_input(std::string av)
 {
     std::string input = av;
-    {if(!check_range(input)) throw "Error";}
-    {if(!check_alpha(input)) throw "Error";}
+    if(!check_alpha(input))throw "Error";
+    if(!check_range(input)) throw "Error";
     deq.push_back(atoi(input.c_str()));
     vec.push_back(atoi(input.c_str()));
 }
@@ -147,10 +147,8 @@ void insert_pendchain(std::vector<int> &mainchain, std::vector<int> &pendchain,s
         mainchain.insert(it, value);
     }
 }
-std::vector<int> PmergeMe::vec_sort(std::vector<int>& vect)
+std::vector<int> PmergeMe::vec_sort(std::vector<int> vect)
 {
-
-    clock_t start = std::clock();
     if(vect.size() == 1) return vect;
     if(vect.size() == 2){ if(vect[0] > vect[1]) std::swap(vect[0], vect[1]); return vect;}
     int extra  = -1;
@@ -166,6 +164,5 @@ std::vector<int> PmergeMe::vec_sort(std::vector<int>& vect)
     std::vector<int>jacob = JP_seq(pendchain);
     rearranging_pend(new_main,mainchain, pendchain, extra);
     insert_pendchain(mainchain, pendchain,jacob,extra,pairs);
-    _time = std::clock() - start; 
     return mainchain;
 }
