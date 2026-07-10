@@ -43,10 +43,10 @@ PmergeMe::PmergeMe(int ac ,char **av)
 
     double time_vec =  (double)(end1 - start1 ) / CLOCKS_PER_SEC * 1000000;
     double time_deq =  (double)(end2 - start2) / CLOCKS_PER_SEC * 1000000;
-    std::cout << "Time to process a range of " << vect.size() << " elements with std::vector: " << time_vec << "us" << std::endl;
-    std::cout << "Time to process a range of " << deq.size() <<  " elements with std::deque : " << time_deq << "us"<< std::endl;
+    std::cout << "Time to process a range of " << vect.size() << " elements with std::vector: " << time_vec << " us" << std::endl;
+    std::cout << "Time to process a range of " << deq.size() <<  " elements with std::deque : " << time_deq << " us"<< std::endl;
 }
-void  PmergeMe::    parse_input(std::string av)
+void  PmergeMe::parse_input(std::string av)
 {
     std::string input = av;
     if(!check_alpha(input))throw "Error";
@@ -59,6 +59,7 @@ void make_pairs(std::vector<int> vect , std::vector<std::pair<int,int> > &pairs)
 {
     for(size_t i = 0 ; i < vect.size() ; i += 2) pairs.push_back(std::make_pair(vect[i], vect[i + 1]));
 }
+
 void swap_pairs(std::vector<std::pair<int , int> > &pair)
 {
     for(size_t i = 0 ; i < pair.size() ; i++)

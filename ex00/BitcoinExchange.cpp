@@ -41,7 +41,7 @@ bool   BitcoinExchange::parsedate(std::string date)
     {
         if(month == "01" || month == "03" || month == "05" || month == "07" || month == "08" 
                      || month == "10" || month == "12") { if(day < "01"|| day > "31") return false;}
-        if(day < "01"|| day > "30") return false;
+        else if(day < "01"|| day > "30") return false;
     }
     return true;
 }
