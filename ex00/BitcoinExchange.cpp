@@ -83,8 +83,10 @@ void    BitcoinExchange::Startexchange()
 
         if(!parsedate(date)) {std::cout << "Error: bad input: => " + line << std::endl; continue;}
         std::string message = parse_value(value);
-        if(!message.empty()) {if(message == "bad input") std::cout << "Error: " + message + ": => "  + line << std::endl; 
-                                std::cout << "Error: " + message << std::endl; continue;}
+        if(!message.empty()) {
+            if(message == "bad input.") std::cout << "Error: " + message + ": => "  + line << std::endl; 
+            else std::cout << "Error: " + message << std::endl; 
+            continue;}
                                 
         try
         {
