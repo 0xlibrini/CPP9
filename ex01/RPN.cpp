@@ -29,11 +29,12 @@ void Rpn::start_exec()
         else if(_input[i] != ' ') do_operations(_input[i]);
     }
 }
+
 double  Rpn::get_result()
 {
     if(_mystack.size() == 1) return _mystack.top();
-    std::cout << _mystack.size() << std::endl;
     throw "Wrong expression.";
 }
+
 Rpn::Rpn(std::string input): _input(input) {start_exec();}
 
