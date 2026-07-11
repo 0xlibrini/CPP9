@@ -19,6 +19,8 @@ class PmergeMe
         PmergeMe();
     public:
         PmergeMe(int count , char **av);
+        PmergeMe(const PmergeMe& other);
+        PmergeMe& operator=(const PmergeMe& other);
         ~PmergeMe();
         void parse_input(std::string  input);
         std::vector<int> vec_sort(std::vector<int> vect);
