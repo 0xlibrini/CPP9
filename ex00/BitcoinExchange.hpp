@@ -15,6 +15,7 @@ class BitcoinExchange
     public:
         BitcoinExchange(const BitcoinExchange& other);
         BitcoinExchange& operator=(const BitcoinExchange& other);
+        ~BitcoinExchange();
         BitcoinExchange(std::string input, std::map<std::string , float>dataset);
         bool parsedate(std::string date);
         void Startexchange();

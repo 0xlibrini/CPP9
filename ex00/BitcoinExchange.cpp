@@ -4,6 +4,8 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange& other) {_dataset = other
 
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {if(this != &other) _dataset = other._dataset; return *this;}
 
+BitcoinExchange::~BitcoinExchange() {}
+
 bool  isdigits(std::string name)
 {
     for(size_t i = 0; i < name.size() ; i++) {if (!isdigit(name[i])) return false;} return true;

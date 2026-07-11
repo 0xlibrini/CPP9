@@ -1,5 +1,10 @@
 #include "RPN.hpp"
 
+
+Rpn::Rpn(const Rpn& other) :  _input(other._input) , _mystack(other._mystack) {}
+Rpn& Rpn::operator=(const Rpn& other) { if(this != &other) {_input = other._input ; _mystack = other._mystack;} return *this;}
+Rpn::~Rpn() {}
+
 void Rpn::do_operations(char input)
 {
     if(_mystack.size() <= 1) throw "Size of element is not enough.";
