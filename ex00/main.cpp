@@ -13,9 +13,9 @@ int main(int ac , char **av)
 {
     if(ac != 2) {std::cout << "Error: could not open file.\n" ; return 1;}
     std::map<std::string ,float> dataset;
-    parse_dataset(dataset);
     try
     {
+        parse_dataset(dataset);
         BitcoinExchange btc(av[1] , dataset);
     }
     catch(const char *e)
